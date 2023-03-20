@@ -1,186 +1,186 @@
-<h1 align="center">Apple ID 一键解锁工具</h1>
-<p align="center">
+<h1 align="center">Công cụ mở khóa Apple ID bằng một cú nhấp chuột</h1>
+<p căn chỉnh="trung tâm">
     <a href="https://github.com/pplulee/appleid_auto/issues" style="text-decoration:none">
-        <img src="https://img.shields.io/github/issues/pplulee/appleid_auto.svg" alt="GitHub issues"/>
+        <img src="https://img.shields.io/github/issues/pplulee/appleid_auto.svg" alt="Sự cố GitHub"/>
     </a>
     <a href="https://github.com/pplulee/appleid_auto/stargazers" style="text-decoration:none" >
-        <img src="https://img.shields.io/github/stars/pplulee/appleid_auto.svg" alt="GitHub stars"/>
+        <img src="https://img.shields.io/github/stars/pplulee/appleid_auto.svg" alt="GitHub sao"/>
     </a>
     <a href="https://github.com/pplulee/appleid_auto/network" style="text-decoration:none" >
         <img src="https://img.shields.io/github/forks/pplulee/appleid_auto.svg" alt="GitHub forks"/>
     </a>
     <a href="https://github.com/pplulee/apple_auto/blob/main/LICENSE" style="text-decoration:none" >
-        <img src="https://img.shields.io/github/license/pplulee/appleid_auto" alt="GitHub license"/>
+        <img src="https://img.shields.io/github/license/pplulee/appleid_auto" alt="Giấy phép GitHub"/>
     </a>
 </p>
-<h3 align="center">中文文档 | <a href="README.md">English</a> </h3>
-<h3 align="center">请仔细阅读本文档以及未来我们会推出的 Wiki 文档，再使用。</h3>  
-<h3 align="center">本项目仍在更新当中。</h3>
+<h3 align="center">Tài liệu tiếng Trung | <a href="README.md">Tiếng Anh</a> </h3>
+<h3 align="center">Vui lòng đọc kỹ tài liệu này và các tài liệu Wiki mà chúng tôi sẽ phát hành trong tương lai trước khi sử dụng. </h3>  
+<h3 align="center">Dự án này vẫn đang được cập nhật. </h3>
 
-# 基本简介
+#giới thiệu cơ bản
 
-“以全新方式管理你的 Apple ID” —— 这是一款基于密保问题的自动化 Apple ID 检测&解锁程序。
+"Quản lý ID Apple của bạn theo cách mới" - đây là chương trình phát hiện & mở khóa Apple ID tự động dựa trên các câu hỏi bảo mật mật khẩu.
 
-前端用于管理账号，支持添加多个账号，并提供展示账号页面；
+Giao diện người dùng được sử dụng để quản lý tài khoản, hỗ trợ thêm nhiều tài khoản và cung cấp trang tài khoản hiển thị;
 
-支持创建包含多个账号的分享页面，并可以为分享页面设置密码。
+Hỗ trợ tạo trang chia sẻ với nhiều tài khoản, có thể đặt mật khẩu cho trang chia sẻ.
 
-后端定时检测账号是否被锁定，若被锁定或开启二步验证则自动解锁，修改密码并向API回报密码。
+Chương trình phụ trợ thường xuyên phát hiện xem tài khoản có bị khóa hay không. Nếu tài khoản bị khóa hoặc xác minh hai bước được bật, tài khoản sẽ tự động được mở khóa, mật khẩu sẽ được thay đổi và mật khẩu sẽ được báo cáo cho API.
 
-登录Apple ID并自动删除Apple ID中的设备。
+Đăng nhập vào ID Apple của bạn và tự động xóa thiết bị khỏi ID Apple của bạn.
 
-启用代理池和Selenium集群，提高解锁成功率，防止风控。
+Kích hoạt nhóm proxy và cụm Selenium để tăng tỷ lệ mở khóa thành công và ngăn ngừa kiểm soát rủi ro.
 
-### 注意事项：
+### Các biện pháp phòng ngừa:
 
-1. 目前**后端运行基于docker**，请确保机器已安装docker；
-2. unblocker_manager为**后端管理程序**，会定时从API获取任务列表并部署docker容器（每个账号对应一个容器）；
-3. 程序**需要使用Chrome webdriver**
-   ，推荐使用Docker版 [selenium/standalone-chrome](https://hub.docker.com/r/selenium/standalone-chrome)
-   ，docker部署指令如下，请根据需求修改参数。(仅支持x86_64，如您有ARM需求
-   ，请尝试[seleniarm/standalone-chromium](https://hub.docker.com/r/seleniarm/standalone-chromium) 或使用docker集群: [sahuidhsu/selenium-grid-docker](https://github.com/sahuidhsu/selenium-grid-docker))
+1. Hiện tại **backend chạy dựa trên docker**, vui lòng đảm bảo máy đã cài đặt docker;
+2. unblocker_manager là một **chương trình quản lý back-end**, chương trình này sẽ thường xuyên lấy danh sách tác vụ từ API và triển khai các bộ chứa docker (mỗi tài khoản tương ứng với một bộ chứa);
+3. Chương trình **cần sử dụng Chrome webdriver**
+   , bạn nên sử dụng phiên bản Docker [selenium/standalone-chrome](https://hub.docker.com/r/selenium/standalone-chrome)
+   , hướng dẫn triển khai docker như sau, vui lòng sửa đổi các tham số theo nhu cầu của bạn. (chỉ hỗ trợ x86_64, nếu bạn có yêu cầu về ARM
+   , hãy thử [seleniarm/standalone-chromium](https://hub.docker.com/r/seleniarm/standalone-chromium) hoặc sử dụng cụm docker: [sahuidhsu/selenium-grid-docker](https://github. com/sahuidhsu/selenium-grid-docker))
 ```bash
-docker run -d --name=webdriver --log-opt max-size=1m --log-opt max-file=1 --shm-size="2g" --restart=always -e SE_NODE_MAX_SESSIONS=10 -e SE_NODE_OVERRIDE_MAX_SESSIONS=true -e SE_SESSION_RETRY_INTERVAL=1 -e SE_VNC_VIEW_ONLY=1 -p 4444:4444 -p 5900:5900 selenium/standalone-chrome
+docker run -d --name=webdriver --log-opt max-size=1m --log-opt max-file=1 --shm-size="2g" --restart=always -e SE_NODE_MAX_SESSIONS=10 -e SE_NODE_OVERRIDE_MAX_SESSIONS=true -e SE_SESSION_RETRY_INTERVAL=1 -e SE_VNC_VIEW_ONLY=1 -p 4444:4444 -p 5900:5900 selen/độc lập-chrome
 ```
-4. 程序的**后端输出**当前支持三种语言：简体中文/英文/越南语，通过[使用方法](#使用方法)中的一键部署脚本可以方便地选择部署语言。
+4. **Đầu ra phụ trợ** của chương trình hiện hỗ trợ ba ngôn ngữ: Tiếng Trung giản thể/Tiếng Anh/Tiếng Việt. Bạn có thể dễ dàng chọn ngôn ngữ triển khai thông qua tập lệnh triển khai bằng một cú nhấp chuột trong [Phương thức sử dụng](#Phương thức sử dụng).
 
 
-# 使用方法
+# Hướng dẫn
 
-**请先部署好前端，再安装后端。后端安装脚本提供一键安装webdriver** \
-如果你想了解Selenium Grid集群，请前往 [sahuidhsu/selenium-grid-docker](https://github.com/sahuidhsu/selenium-grid-docker) \
-网页端运行环境推荐 php7.4 & MySQL8.0，理论支持MySQL5.x，其他版本php可能不支持。
+** Vui lòng triển khai giao diện người dùng trước, sau đó cài đặt giao diện người dùng phía sau. Tập lệnh cài đặt phụ trợ cung cấp cài đặt webdriver chỉ bằng một cú nhấp chuột** \
+Nếu bạn muốn tìm hiểu về cụm Lưới Selenium, vui lòng truy cập [sahuidhsu/selenium-grid-docker](https://github.com/sahuidhsu/selenium-grid-docker)\
+php7.4 & MySQL8.0 được khuyến nghị cho môi trường đang chạy của trang web, MySQL5.x được hỗ trợ về mặt lý thuyết và các phiên bản php khác có thể không được hỗ trợ.
 
-1. 从Release下载网页源码并部署，导入数据库 (`sql/db.sql`) ，复制配置文件`config.bak.php`到`config.php`，并填写设置项 \
-   默认账户：`admin` 密码：`admin`
-2. 登录网站后，添加Apple账号，填写账号信息
-3. 部署`backend\unblocker_manager.py`（提供一键部署脚本，请见下方）
-4. 查看`unblocker_manager`是否成功获取到任务列表
-5. 查看容器是否部署并正常运行
+1. Tải xuống mã nguồn của trang web từ Bản phát hành và triển khai nó, nhập cơ sở dữ liệu (`sql/db.sql`), sao chép tệp cấu hình `config.bak.php` sang `config.php` và điền vào mục cài đặt \
+   Tài khoản mặc định: `admin` Mật khẩu: `admin`
+2. Sau khi đăng nhập website, thêm tài khoản Apple và điền thông tin tài khoản
+3. Triển khai `backend\unblocker_manager.py` (cung cấp tập lệnh triển khai bằng một cú nhấp chuột, xem bên dưới)
+4. Kiểm tra xem `unblocker_manager` đã lấy thành công danh sách nhiệm vụ chưa
+5. Kiểm tra xem container đã được triển khai và chạy bình thường chưa
 
-### [推荐]一键部署unblocker_manager（后端+webdriver）：
+### [Khuyến nghị] Triển khai unblocker_manager bằng một cú nhấp chuột (phụ trợ + trình điều khiển web):
 ```bash
 bash <(curl -Ls https://raw.githubusercontent.com/pplulee/appleid_auto/main/backend/install_unblocker.sh)
 ```
 
-### 关于密保问题的说明：
+### Giải thích về các vấn đề bảo mật:
 
-问题一栏仅需填写关键词即可，例如”生日“、”工作“等，但请注意账号安全问题的**语言**
+Trong cột câu hỏi, bạn chỉ cần điền các từ khóa, chẳng hạn như "sinh nhật", "công việc", v.v., nhưng hãy chú ý đến **ngôn ngữ** của câu hỏi bảo mật tài khoản
 
-# 前端更新
+# Cập nhật giao diện người dùng
 
-从Release下载网页源码并覆盖原有文件，重新填写config.php，导入更新的数据库文件（开头为update_的文件）即可。
+Tải xuống mã nguồn của trang web từ Bản phát hành và ghi đè lên tệp gốc, điền lại config.php và nhập tệp cơ sở dữ liệu đã cập nhật (tệp bắt đầu bằng update_).
 
-# 后端更新
+# cập nhật phụ trợ
 
-若是最新版本的后端管理脚本，只需重启appleauto服务即可。若无法更新，可重新执行安装脚本
+Nếu đó là phiên bản mới nhất của tập lệnh quản lý back-end, chỉ cần khởi động lại dịch vụ appleauto. Nếu không thể cập nhật, bạn có thể thực hiện lại tập lệnh cài đặt
 
-# 问题反馈&交流
+# Câu Hỏi Phản Hồi & Truyền Thông
 
-开发者水平和能力有限，程序可能存在诸多bug，欢迎提出 Issue 或 Pull Request ，也欢迎各位大佬加入项目！ \
+Trình độ và khả năng của nhà phát triển có hạn, và có thể có nhiều lỗi trong chương trình. Các vấn đề hoặc Yêu cầu kéo đều được hoan nghênh và mọi người đều được hoan nghênh tham gia dự án! \
 Telegram群：[@appleunblocker](https://t.me/appleunblocker)
 
-# 文件说明
+# tập tin đặc tả
 
-- `backend\unblocker_manager.py` 后端管理程序 \
-  说明：用于定时从API获取任务列表，并部署task对应的docker容器 \
-  启动参数：`-api_url <API地址> -api_key <API key> ` （API地址格式为`http(s)://xxx.xxx` 末尾不需要加`/`或路径）
-- `backend\unlocker\main.py` 后端解锁程序 \
-  说明：通过Webdriver实现账号改密解锁，并向API提交新密码。**该程序依赖API运行** \
-  启动参数：`-api_url <API地址> -api_key <API key> -taskid <Task ID>`
+- `backend\unblocker_manager.py` trình quản lý phụ trợ \
+  Mô tả: Dùng để thường xuyên lấy task list từ API và triển khai docker container tương ứng với task \
+  Tham số khởi động: `-api_url <địa chỉ API> -api_key <khóa API>` (định dạng của địa chỉ API là `http(s)://xxx.xxx` và không cần thêm `/` hoặc đường dẫn tại kết thúc)
+- `backend\unlocker\main.py` trình mở khóa phụ trợ \
+  Mô tả: Thay đổi và mở khóa tài khoản thông qua Webdriver, đồng thời gửi mật khẩu mới cho API. **Chương trình này dựa vào API để chạy** \
+  Tham số bắt đầu: `-api_url <địa chỉ API> -api_key <khóa API> -taskid <ID tác vụ>`
 
-仅部署**后端管理程序**即可，该脚本会自动从API站点获取任务并部署容器，默认同步时间为10分钟（重启服务即可立即同步） \
-若不想使用自动同步，也可以直接部署**后端解锁程序** ，docker版 [sahuidhsu/appleid_auto](https://hub.docker.com/r/sahuidhsu/appleid_auto)
+Chỉ cần triển khai **chương trình quản lý backend**, script sẽ tự động nhận tác vụ từ site API và triển khai container, thời gian đồng bộ mặc định là 10 phút (khởi động lại dịch vụ để đồng bộ ngay) \
+Nếu không muốn sử dụng đồng bộ hóa tự động, bạn cũng có thể triển khai trực tiếp **Trình mở khóa phụ trợ**, phiên bản docker [sahuidhsu/appleid_auto](https://hub.docker.com/r/sahuidhsu/appleid_auto)
 
 ---
-# 请我喝杯可乐
+# mua cho tôi một lon coca
 [![ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/baiyimiao) \
 USDT-TRC20: TV1su1RnQny27YEF9WG4DbC8AAz3udt6d4 \
 ETH-ERC20：0xea8fbe1559b1eb4b526c3bb69285203969b774c5 \
-【广告】如果您有使用邮局的需求，欢迎咨询[开发者](https://t.me/baiyimiao) (Telegram)
+[Quảng cáo] Nếu bạn cần sử dụng bưu điện, vui lòng tham khảo [Nhà phát triển](https://t.me/baiyimiao) (Telegram)
 
 ---
 
-# API说明
+# Mô tả API
 
-路径： `/api/` \
-方法： `GET` \
-所有action均需要传入`key`参数，值为`config.php`中的`apikey` \
-返回类型： `JSON` \
-通用返回参数
+Đường dẫn: `/api/` \
+Phương thức: `GET` \
+Tất cả các hành động cần chuyển tham số `key`, giá trị là `apikey` trong `config.php` \
+Kiểu trả về: `JSON`\
+Tham số trả về chung
 
-| 参数        | 值/类型             | 说明      |
+|Tham số |Giá trị/Loại |Mô tả |
 |-----------|------------------|---------|
-| `status`  | `success`/`fail` | 操作成功/失败 |
-| `message` | `String`         | 提示信息    |
+| `trạng thái` | `thành công`/`thất bại` | thao tác thành công/thất bại |
+|`thông báo`|`Chuỗi`|thông báo nhắc nhở|
 
-Action: `random_sharepage_password` \
-说明： 生成随机分享页密码 \
-输入参数：
+Hành động: `random_sharepage_password` \
+Mô tả: Tạo mật khẩu trang chia sẻ ngẫu nhiên \
+Thông số đầu vào:
 
-| 参数       | 值/类型                        | 说明    |
+|Tham số |Giá trị/Loại |Mô tả |
 |----------|-----------------------------|-------|
-| `action` | `random_sharepage_password` | 操作    |
-| `id`     | `Int`                       | 分享页ID |
+|`hành động` |`ngẫu nhiên_sharepage_password` |
+|`id`|`Int`|ID trang chia sẻ|
 
-返回参数：
+Tham số trả về:
 
-| 参数         | 值/类型     | 说明  |
+|Tham số |Giá trị/Loại |Mô tả |
 |------------|----------|-----|
-| `password` | `String` | 新密码 |
+|`mật khẩu`|`Chuỗi`|mật khẩu mới|
 
-……其余等待添加
+...phần còn lại đang chờ được thêm vào
 
 ---
 
-# JSON API接口
+# Giao diện API JSON
 
-支持通过分享页面链接，以JSON方式获取账号信息，用于对接其他APP \
-分享页面链接指页面的代码，并非整个URL
+Hỗ trợ lấy thông tin tài khoản ở dạng JSON bằng cách chia sẻ liên kết trang, để kết nối với các Ứng dụng khác \
+Liên kết trang được chia sẻ đề cập đến mã của trang, không phải toàn bộ URL
 
-API地址：`/api/share.php` \
-请求方法：`GET` \
-输入参数：
+Địa chỉ API: `/api/share.php` \
+Phương thức yêu cầu: `GET` \
+Thông số đầu vào:
 
-| 参数           | 值/类型     | 说明                |
+|Tham số |Giá trị/Loại |Mô tả |
 |--------------|----------|-------------------|
-| `share_link` | `String` | 分享页代码             |
-| `password`   | `String` | 分享页密码（若未设置密码则不需要） |
+|`share_link`|`String`|chia sẻ mã trang|
+|`password`|`String`|Mật khẩu của trang chia sẻ (không bắt buộc nếu chưa đặt mật khẩu) |
 
-返回参数：
+Tham số trả về:
 
-| 参数         | 值/类型             | 说明            |
+|Tham số |Giá trị/Loại |Mô tả |
 |------------|------------------|---------------|
-| `status`   | `success`/`fail` | 操作成功/失败       |
-| `message`  | `String`         | 提示信息          |
-| `accounts` | `Array`          | 账号信息列表（内容见下表） |
+| `trạng thái` | `thành công`/`thất bại` | thao tác thành công/thất bại |
+|`thông báo`|`Chuỗi`|thông báo nhắc nhở|
+|`accounts`|`Array`|danh sách thông tin tài khoản (xem bảng bên dưới) |
 
-账号信息：
+thông tin tài khoản:
 
-| 参数           | 值/类型     | 说明     |
+|Tham số |Giá trị/Loại |Mô tả |
 |--------------|----------|--------|
-| `id`         | `Int`    | 账号ID   |
-| `username`   | `String` | 账号     |
-| `password`   | `String` | 密码     |
-| `status`     | `Bool`   | 账号状态   |
-| `last_check` | `String` | 上次检查时间 |
-| `remark`     | `String` | 账号前端备注 |
+|`id` |`Int` |ID tài khoản|
+|`tên người dùng`|`Chuỗi`|số tài khoản|
+|`mật khẩu`|`Chuỗi`|mật khẩu|
+|`trạng thái` |`Bool`|trạng thái tài khoản|
+|`last_check` |`String` | thời gian kiểm tra lần cuối |
+| `nhận xét` | `Chuỗi` | nhận xét về giao diện người dùng của tài khoản |
 
 
 ---
-# TODO List
+# Những việc cần làm
 
-- [x] 自动识别验证码
-- [x] 检测账号被锁
-- [x] 检测二步验证
-- [x] 分享页面支持多个账号
-- [x] 分享页可开启密码
-- [x] 检查密码正确
-- [x] 删除设备
-- [x] 定时修改密码
-- [x] 上报密码
-- [x] 代理池
-- [x] Telegram Bot通知
-- [x] JSON API接口获取账号信息
-- [x] 后端支持从API接口获取代理
-- [ ] 分享页支持有效期
+- [x] Mã xác minh tự động nhận dạng
+- [x] Phát hiện tài khoản bị khóa
+- [x] Phát hiện 2FA
+- [x] Trang chia sẻ hỗ trợ nhiều tài khoản
+- [x] trang chia sẻ có thể mở mật khẩu
+- [x] Kiểm tra mật khẩu có đúng không
+- [x] xóa thiết bị
+- [x] Thay đổi mật khẩu thường xuyên
+- [x] khai báo mật khẩu
+- [x] nhóm proxy
+- [x] Thông báo bot Telegram
+- [x] Giao diện API JSON để lấy thông tin tài khoản
+- [x] Phần phụ trợ hỗ trợ lấy proxy từ giao diện API
+- [ ] trang chia sẻ hỗ trợ thời hạn hiệu lực
