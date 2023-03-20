@@ -13,7 +13,7 @@
         <img src="https://img.shields.io/github/license/pplulee/appleid_auto" alt="Giấy phép GitHub"/>
     </a>
 </p>
-<h3 align="center"><a href="README_zh_CN.md" style="text-decoration:none">中文文档</a> | Tiếng Anh</h3>
+<h3 align="center"><a href="README_zh_CN.md" style="text-decoration:none">Tài liệu tiếng Trung</a> | Tiếng Anh</h3>
 <h3 align="center">Làm theo hướng dẫn bên dưới để có trải nghiệm tốt hơn</h3>  
 <h3 align="center">Dự án của chúng tôi là nguồn mở và sẽ được cập nhật theo thời gian</h3>
 
@@ -43,7 +43,7 @@ nên sử dụng phiên bản Docker [selenium/standalone-chrome](https://hub.do
 lệnh triển khai docker như sau, vui lòng sửa đổi các tham số theo nhu cầu của bạn. (Chỉ hỗ trợ x86_64,
 nếu bạn đang sử dụng ARM, hãy thử [seleniarm/standalone-chromium](https://hub.docker.com/r/seleniarm/standalone-chromium) hoặc sử dụng lưới cụm: [sahuidhsu/selenium-grid-docker](https: //github.com/sahuidhsu/selenium-grid-docker))
 ```bash
-docker run -d --name=webdriver --log-opt max-size=1m --log-opt max-file=1 --shm-size="2g" --restart=always -e SE_NODE_MAX_SESSIONS=10 -e SE_NODE_OVERRIDE_MAX_SESSIONS=true -e SE_SESSION_RETRY_INTERVAL=1 -e SE_VNC_VIEW_ONLY=1 -p 4444:4444 -p 5900:5900 selen/độc lập-chrome
+docker run -d --name=webdriver --log-opt max-size=1m --log-opt max-file=1 --shm-size="2g" --restart=always -e SE_NODE_MAX_SESSIONS=10 -e SE_NODE_OVERRIDE_MAX_SESSIONS=true -e SE_SESSION_RETRY_INTERVAL=1 -e SE_VNC_VIEW_ONLY=1 -p 4444:4444 -p 5900:5900 selen/ độc lập-chrome
 ```
 4. Chương trình **backend** hiện hỗ trợ 3 ngôn ngữ: tiếng Anh, tiếng Hoa giản thể và tiếng Việt.
 Có thể dễ dàng đặt ngôn ngữ bằng cách sử dụng tập lệnh triển khai bằng một cú nhấp chuột được cung cấp trong phần [Cách sử dụng](#Cách sử dụng).
@@ -86,7 +86,7 @@ Nếu bạn đang sử dụng phiên bản mới nhất của tập lệnh quả
 # Phản hồi và Truyền thông
 
 Chúng tôi không chuyên nghiệp, vì vậy như chương trình. Các vấn đề và Yêu cầu kéo đều được hoan nghênh và chúng tôi rất mong nhận được sự đóng góp của bạn! \
-Nhóm Telegram: [@appleunblocker](https://t.me/appleunblocker)
+Nhom Telegram: [@appleunblocker](https://t.me/appleunblocker)
 
 
 # Mô tả tập tin
@@ -154,8 +154,8 @@ Thông số đầu vào:
 
 | thông số | giá trị/loại | mô tả |
 |--------------|--------------|------------------- -|
-| `liên_kết_chia_sẻ` | `Chuỗi` | 分享页代码 |
-| `mật khẩu` | `Chuỗi` | 分享页密码（若未设置密码则不需要） |
+|`liên_kết_chia_sẻ` |`Chuỗi` |Chia sẻ mã trang|
+|`mật khẩu` |`Chuỗi`|Mật khẩu chia sẻ trang (không bắt buộc nếu chưa đặt mật khẩu) |
 
 tham số trả về:
 
